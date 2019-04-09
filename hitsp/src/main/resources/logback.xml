@@ -1,0 +1,72 @@
+<configuration scan="true" scanPeriod="60 seconds">
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <!--<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">-->
+    <!--<queueSize>512</queueSize>-->
+    <!--<appender-ref ref="FILE"/>-->
+    <!--</appender>-->
+
+    <!--<appender name="stash" class="ch.qos.logback.core.ConsoleAppender">-->
+    <!--<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+    <!--</encoder>-->
+    <!--</appender>-->
+
+
+    <appender name="stashfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logstash/logstash-%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>50</maxHistory>
+            <totalSizeCap>500MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        </encoder>
+    </appender>
+
+    <!--<appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>${LOG_HOME}/error.log</file>-->
+        <!--<append>true</append>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">-->
+            <!--<fileNamePattern>${LOG_HOME}/logs/error.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>-->
+            <!--<maxFileSize>20MB</maxFileSize>-->
+            <!--<maxHistory>7</maxHistory>-->
+            <!--<totalSizeCap>20GB</totalSizeCap>-->
+        <!--</rollingPolicy>-->
+        <!--<encoder>-->
+            <!--<pattern>[%date{yyyy-MM-dd HH:mm:ss}] [%-5level] [%logger:%line] &#45;&#45;%mdc{client} %msg%n</pattern>-->
+        <!--</encoder>-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERROR</level>-->
+            <!--<onMatch>ACCEPT</onMatch>-->
+            <!--<onMismatch>DENY</onMismatch>-->
+        <!--</filter>-->
+    <!--</appender>-->
+
+    <!--<appender name="TCPSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+        <!--<destination></destination>>-->
+        <!--<encoder class="net.logstash.logback.encoder.LogstashEncoder">-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <appender name="LOGSTASH" class="com.cwbase.logback.RedisAppender">
+        <source>logstashdemo</source>
+        <type>redis_cluster</type>
+        <host>r-2ze7c17ff5a59f44.redis.rds.aliyuncs.com</host>
+        <password>Redis2017SaasHisenseHics</password>
+        <port>6379</port>
+        <key>logstash</key>
+        <tags>dev</tags>
+        <mdc>true</mdc>
+        <location>true</location>
+        <callerStackIndex>0</callerStackIndex>
+    </appender>
+    <root level="info">
+
+        <!--<appender-ref ref="CONSOLE"/>-->
+        <!--<appender-ref ref="stash" />-->
+        <appender-ref ref="stashfile" />
+        <!--<appender-ref ref="TCPSTASH" />-->
+        <appender-ref ref="LOGSTASH"/>
+    </root>
+</configuration>

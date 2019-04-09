@@ -1,0 +1,151 @@
+server:
+  port: 8081
+  tomcat:
+    max-http-post-size: 0
+
+druid:
+  url: jdbc:mysql://xxxxx.com:3306?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&useDynamicCharsetInfo=false
+  initialSize: 2
+  maxActive: 600
+  minIdle: 2
+  maxWait: 10000
+  poolPreparedStatements: false
+#  maxPoolPreparedStatementPerConnectionSize: 33
+  testOnBorrow: false
+  testOnReturn: false
+  testWhileIdle: true
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 25200000
+  removeAbandoned: true
+  logAbandoned: true
+  filters: stat
+  connectionProperties:
+  validationQuery: Select 1
+  username: xxx
+  password: xxx
+  stat:
+    slowSqlMillis: 10000
+
+hisense:
+  dustms:
+    security:
+      authentication:
+        sign:
+          enable: true
+      ignoreMatchers: /o2o/mt/callurl,/o2o/mt/pushorder,/o2o/mt/ordercompleted,/o2o/mt/cancelorder,/o2o/mt/shippingstatus,/o2o/mt/shopstatus,/o2o/mt/refund,/o2o/mt/confirmOrder,/o2o/eleme/push,/o2o/eleme/callurl,/o2o/shop/excel/import,/o2o/product/excel/import,/o2o/product/category/excel/import,/o2o/shop/excel/import06,/o2o/product/excel/import06,/o2o/product/category/excel/import06,/o2o/mt/unbind,/o2o/mt/privacynumdow,/o2o/privacynum/getrealphone,/o2o/account/test,/o2o/product/public/excel/import,/o2o/product/public/category/excel/import,/o2o/jd/callurl,/o2o/jd/djsw/newOrder,/o2o/jd/djsw/orderWaitOutStore,/o2o/jd/djsw/pickFinishOrder,/o2o/jd/djsw/finishOrder,/o2o/jd/djsw/userCancelOrder,/o2o/jd/djsw/applyCancelOrder,/o2o/jd/djsw/orderInfoChange,/o2o/product/spec/handle,/o2o/eb/callurl
+    stream:
+      enable: true
+  dustdb:
+    urlParameters: useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&serverTimezone=UTC
+    initWhenCreate: true
+    autoAdapterDestroy: true
+    poolName: druid
+    dbList[0]:
+      url: jdbc:mysql://xxx:3306/dustprod?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&useDynamicCharsetInfo=false
+      username: xxx
+      password: xxx
+      name: dustprod
+    dbList[1]:
+      url: jdbc:mysql://xxx:3306/dustprod?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC&useDynamicCharsetInfo=false
+      username: xxx
+      password: xxx
+      name: tenantdb
+    tenant:
+      admin: true
+      datasourceName: dustprod
+      enable: true
+
+#spring.rabbitmq, SpringCloudStream
+spring:
+  rabbitmq:
+    host: xxx
+    port: 5672
+    username: xxx
+    password: xxx
+
+  cloud:
+    stream:
+      bindings:
+        dustOut:
+          binder: rabbit
+          destination: dustDataHxn
+
+        dustIn:
+          binder: rabbit
+          destination: dustDataHxn
+          group: dustGroupHxn
+  application:
+    name: saasp-hitsp
+  data:
+    mongodb:
+      host: xxx
+      port: xxx
+      database: xxx
+      username: xxx
+      password: xxx
+  jackson:
+    default-property-inclusion: non_null
+  http:
+    multipart:
+      maxFileSize: 10Mb
+      maxRequestSize: 10Mb
+
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: xxxx
+
+security:
+  basic:
+    enabled: false
+endpoints:
+  shutdown:
+    enabled: true
+    sensitive: false
+  restart:
+    enabled: true
+    sensitive: false
+  trace:
+    enabled: true
+    sensitive: false
+  dump:
+    enabled: true
+    sensitive: false
+  metrics:
+    enabled: true
+    sensitive: false
+  env:
+    enabled: true
+    sensitive: false
+  health:
+    enabled: true
+    sensitive: false
+  logfile:
+    enabled: true
+    sensitive: false
+  configprops:
+    enabled: true
+    sensitive: false
+
+eleme:
+    isSandbox: false
+    key: xxx
+    secret: xxx
+    callbackUrl: xxx
+
+# eleme:
+#     isSandbox: true
+#     key: xxx
+#     secret: xxx
+#     callbackUrl: xxx
+
+
+push:
+  xiaoweiUrl: xxx
+  xiaoweiUrlStatus: xxx
+
+database:
+  databaseCount: 5

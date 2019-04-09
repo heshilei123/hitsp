@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: prod
+logging:
+  file: /logs/hitsp.log

@@ -1,0 +1,13 @@
+#spring:
+#  cloud:
+#    config:
+#      enabled: true
+#      discovery:
+#        enabled: true
+#        serviceId: saasp-hitsp
+#eureka:
+#  client:
+#    serviceUrl:
+##      defaultZone: http://10.16.8.96:1111/eureka/,http://10.16.8.94:1111/eureka/
+#      defaultZone: http://10.16.8.29:1111/eureka/
+#

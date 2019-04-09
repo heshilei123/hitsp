@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>授权成功</title>
+	<style>
+		#container{
+			width: 500px;
+			height: 300px;
+			margin: 100px auto;
+			background-color: #D6DFE6;
+			overflow: hidden;
+		}
+		#container p{
+			margin-top: 100px;
+			text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<p>授权成功！<br/><br/><span id="daojishi"></span>秒后返回继续操作。</p>
+	</div>
+	<script>
+	window.onload=function(){
+		var i=3;
+		document.getElementById("daojishi").innerHTML=i;
+		setInterval(function () {
+		 i=i-1;	
+		 document.getElementById("daojishi").innerHTML=i;
+		 if(i<=0){
+		 	window.close();
+		 }
+	}, 1000)
+	}
+	</script>
+</body>
+</html>
